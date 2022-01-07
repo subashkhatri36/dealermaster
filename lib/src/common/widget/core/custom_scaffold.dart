@@ -1,4 +1,5 @@
 import 'package:dealermaster/src/common/constant/constants.dart';
+import 'package:dealermaster/src/common/constant/enums.dart';
 import 'package:dealermaster/src/common/utils/app_size_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,7 @@ class CustomScaffold extends StatefulWidget {
   final bool addPadding;
   final Widget body;
   final AppBar? appbar;
+  final UserType userType;
   final Future<bool> Function()? onWillPopScope;
   const CustomScaffold(
       {Key? key,
@@ -14,6 +16,7 @@ class CustomScaffold extends StatefulWidget {
       this.addPadding = true,
       required this.body,
       this.appbar,
+      this.userType = UserType.staff,
       this.onWillPopScope})
       : super(key: key);
 

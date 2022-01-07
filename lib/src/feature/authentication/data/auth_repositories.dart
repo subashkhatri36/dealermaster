@@ -86,11 +86,20 @@ class AuthRepositories extends Repo implements IAuth {
       String email, String password, String repassword, String fullname) async {
     try {
       final data = {
-        "fullname": fullname,
-        "email": email,
-        "password": password,
-        "repassword": password,
-        "role": "farmer"
+        "fullname": "skc",
+        "email": "sk@gmail.com",
+        "password": "subash",
+        "repassword": "subash",
+        "role": "admin",
+        "device": "web",
+        "isStaff": true
+        // "fullname": fullname,
+        // "email": email,
+        // "password": password,
+        // "repassword": password,
+        // "role": "admin",
+        // "device": "web",
+        // "isStaff": true
       };
 
       final res = await client.post(ApiLink.register, data: data);
@@ -104,7 +113,6 @@ class AuthRepositories extends Repo implements IAuth {
 
       return null;
     } catch (error) {
-      // return error.toString().replaceAll(RegExp(r"\p{P}", unicode: true), "");
       return error.toString();
     }
   }

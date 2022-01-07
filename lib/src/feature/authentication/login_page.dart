@@ -13,9 +13,11 @@ import 'package:dealermaster/src/common/widget/texts/header_text_widget.dart';
 import 'package:dealermaster/src/common/widget/texts/normal_text.dart';
 import 'package:dealermaster/src/feature/authentication/bloc/auth_provider.dart';
 import 'package:dealermaster/src/feature/splash/splash_page.dart';
+import 'package:dealermaster/src/routes/app_router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:auto_route/auto_route.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -84,8 +86,11 @@ class _LoginPageState extends State<LoginPage> {
               Container(
                 alignment: Alignment.centerRight,
                 padding: const EdgeInsets.only(right: kDefaultPadding),
-                child: const InkWell(
-                  child: CustomTextWidget(
+                child: InkWell(
+                  onTap: () {
+                    context.router.push(const ForgetPasswordPageRoute());
+                  },
+                  child: const CustomTextWidget(
                     text: "authentication.forgetpassword",
                     isFirstcaptial: false,
                     textColor: kBlue,
@@ -120,9 +125,11 @@ class _LoginPageState extends State<LoginPage> {
                                         emailController.text,
                                         passwordController.text);
                                     if (val.contains("ok")) {
+                                      //TODO:directly goto navigation dashboard according to its info
                                       // context.router
                                       //     .replace(NavBarPageRoute());
                                     } else if (val == "assign") {
+                                      //check
                                       // context.router.replace(
                                       //     const CompanyPageRoute());
                                     } else {
@@ -135,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                     CustomElevatedButton(
                       label: "authentication.createnewuser",
                       onPressed: () {
-                        // context.router.replace(const RegisterPageRoute());
+                        context.router.replace(const RegisterPageRoute());
                       },
                       backgroundColor: kRedColor,
                     ),
@@ -204,8 +211,12 @@ class _LoginPageState extends State<LoginPage> {
                         Container(
                           alignment: Alignment.centerRight,
                           // padding: const EdgeInsets.only(right: kDefaultPadding),
-                          child: const InkWell(
-                            child: CustomTextWidget(
+                          child: InkWell(
+                            onTap: () {
+                              context.router
+                                  .push(const ForgetPasswordPageRoute());
+                            },
+                            child: const CustomTextWidget(
                               text: "authentication.forgetpassword",
                               isFirstcaptial: false,
                               textColor: kBlue,
@@ -251,92 +262,13 @@ class _LoginPageState extends State<LoginPage> {
                           ismargin: false,
                           label: "authentication.createnewuser",
                           onPressed: () {
-                            // context.router.replace(const RegisterPageRoute());
+                            context.router.replace(const RegisterPageRoute());
                           },
                           backgroundColor: kRedColor,
                         ),
                       ],
                     ),
                   )),
-              // child: Card(child: Container()
-              // Column(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   crossAxisAlignment: CrossAxisAlignment.center,
-              //   children: [
-
-              //     Padding(
-              //       padding: const EdgeInsets.all(kDefaultPadding),
-              //       child: Column(
-              //         children: [
-              //
-              //         ],
-              //       ),
-              //     ),
-              //     Container(
-              //       alignment: Alignment.centerRight,
-              //       padding: const EdgeInsets.only(right: kDefaultPadding),
-              //       child: const InkWell(
-              //         child: CustomTextWidget(
-              //           text: "authentication.forgetpassword",
-              //           isFirstcaptial: false,
-              //           textColor: kBlue,
-              //         ),
-              //       ),
-              //     ),
-              //     const HeightWidget(30),
-              //     Padding(
-              //       padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-              //       child: Column(
-              //         children: [
-              //           Consumer(
-              //             builder:
-              //                 (BuildContext context, WidgetRef ref, Widget? child) {
-              //               final auth = ref.watch(authProvider);
-              //               return auth.isloginSubmissionProgress
-              //                   ? Column(
-              //                       children: const [
-              //                         LoadingIndicator(
-              //                           text: "authentication.log_loading",
-              //                         ),
-              //                         HeightWidget(10),
-              //                       ],
-              //                     )
-              //                   : CustomElevatedButton(
-              //                       backgroundColor: kGreenColor,
-              //                       label: "authentication.login",
-              //                       onPressed: () async {
-              //                         if (logfromKey.currentState!.validate()) {
-              //                           final val = await auth.loginFarmer(
-              //                               emailController.text,
-              //                               passwordController.text);
-              //                           if (val.contains("ok")) {
-              //                             // context.router
-              //                             //     .replace(NavBarPageRoute());
-              //                           } else if (val == "assign") {
-              //                             // context.router.replace(
-              //                             //     const CompanyPageRoute());
-              //                           } else {
-              //                             toastMessage(context, message: val);
-              //                           }
-              //                         }
-              //                       });
-              //             },
-              //           ),
-              //           CustomElevatedButton(
-              //             label: "authentication.createnewuser",
-              //             onPressed: () {
-              //               // context.router.replace(const RegisterPageRoute());
-              //             },
-              //             backgroundColor: kRedColor,
-              //           ),
-              //         ],
-              //       ),
-              //     )
-
-              //     // const HeightWidget(15),
-              //   ],
-              // ),
-              // ),
             ),
           ],
         ),
