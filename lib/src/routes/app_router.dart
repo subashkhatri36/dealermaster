@@ -10,7 +10,7 @@ Login register feature.
 
  */
 @MaterialAutoRouter(routes: <AutoRoute>[
-  AutoRoute(page: SplashPage, initial: true),
   AutoRoute(page: LoginPage),
+  AutoRoute(page: SplashPage, initial: true),
 ])
 class $AppRouter {}

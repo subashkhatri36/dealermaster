@@ -31,6 +31,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return CustomScaffold(
         body: Form(
       key: logfromKey,

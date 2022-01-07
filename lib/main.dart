@@ -8,6 +8,7 @@ import 'package:dealermaster/src/theme_data/theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'configure_nonweb.dart'; // if (dart.library.html) 'configure_web.dart';
 
 import 'app_localization.dart';
 
@@ -29,6 +30,7 @@ class Logger extends ProviderObserver {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  configureApp();
 
   await SharedPrefProvider.initialize();
   //initializeDateFormatting().then((_) =>
