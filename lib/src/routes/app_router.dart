@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:dealermaster/src/feature/authentication/login_page.dart';
 import 'package:dealermaster/src/feature/splash/splash_page.dart';
 
 // flutter packages pub run build_runner watch --delete-conflicting-outputs
@@ -10,5 +11,6 @@ Login register feature.
  */
 @MaterialAutoRouter(routes: <AutoRoute>[
   AutoRoute(page: SplashPage, initial: true),
+  AutoRoute(page: LoginPage),
 ])
 class $AppRouter {}

@@ -60,7 +60,7 @@
         "logoutinfo": "I want to logout ?"
     },
     "authentication": {
-        "login_title": "Login As Farmer",
+        "login_title": "Login",
         "fullname": "Full Name",
         "email": "Email",
         "password": "Password",

@@ -21,6 +21,7 @@ class BorderWthTitleContainer extends StatelessWidget {
     this.onTap,
     this.kbtnTextColor = kBlackColor,
     this.titlefontsize = kDefaultFontSize,
+    this.isTitleCenter = false,
     this.isPadding = true,
   }) : super(key: key);
   final Widget child;
@@ -37,12 +38,14 @@ class BorderWthTitleContainer extends StatelessWidget {
   final Color btnColor;
   final Color kbtnTextColor;
   final bool isPadding;
+  final bool isTitleCenter;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(
+          top: 0,
           bottom: kDefaultmargin,
           left: kDefaultmargin / 2,
           right: kDefaultmargin / 2),
@@ -78,7 +81,9 @@ class BorderWthTitleContainer extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: isTitleButton
                       ? MainAxisAlignment.spaceBetween
-                      : MainAxisAlignment.start,
+                      : isTitleCenter
+                          ? MainAxisAlignment.center
+                          : MainAxisAlignment.start,
                   children: [
                     CustomTextWidget(
                       text: title,
