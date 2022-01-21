@@ -14,10 +14,10 @@ import 'package:auto_route/auto_route.dart' as _i6;
 import 'package:flutter/material.dart' as _i7;
 
 import '../common/constant/enums.dart' as _i8;
-import '../feature/authentication/compnay_info/company_info.dart' as _i5;
 import '../feature/authentication/forget_password.dart' as _i3;
 import '../feature/authentication/login_page.dart' as _i1;
 import '../feature/authentication/register_page.dart' as _i4;
+import '../feature/compnay_info/company_info.dart' as _i5;
 import '../feature/splash/splash_page.dart' as _i2;
 
 class AppRouter extends _i6.RootStackRouter {

@@ -13,6 +13,7 @@ import 'package:dealermaster/src/common/widget/input_fields/input_field.dart';
 import 'package:dealermaster/src/common/widget/responsive/responsive_layout.dart';
 import 'package:dealermaster/src/common/widget/size/custom_size_widget.dart';
 import 'package:dealermaster/src/common/widget/texts/header_text_widget.dart';
+import 'package:dealermaster/src/common/widget/texts/normal_text.dart';
 import 'package:dealermaster/src/feature/authentication/bloc/auth_provider.dart';
 import 'package:dealermaster/src/feature/splash/splash_page.dart';
 import 'package:dealermaster/src/routes/router.dart';
@@ -43,10 +44,119 @@ class _RegisterPageState extends State<RegisterPage> {
         body: Form(
       key: regfromKey,
       child: ResponsiveLayout(
-        mobile: Container(),
+        mobile: mobileRegisterPage(),
         desktopAndWeb: desktopRegisterPage(),
       ),
     ));
+  }
+
+  //========mobile app===============
+  Widget mobileRegisterPage() {
+    return SafeArea(
+      child: SizedBox(
+        width: SizeConfig.screenWidth,
+        height: SizeConfig.screenHeight,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const HeightWidget(30),
+                const AppLogo(w: 170, h: 110),
+                const HeightWidget(20),
+                const HeaderTextWidget(
+                  text: "authentication.reg_title",
+                ),
+                const HeightWidget(20),
+                Column(
+                  children: [
+                    InputField(
+                      textInputType: TextInputType.text,
+                      icon: FontAwesomeIcons.user,
+                      controller: nameController,
+                      hintText: "authentication.fullname",
+                      validator: (value) => Validators.isEmpty(string: value),
+                    ),
+                    InputField(
+                      textInputType: TextInputType.emailAddress,
+                      icon: FontAwesomeIcons.envelope,
+                      controller: emailController,
+                      hintText: "authentication.email",
+                      validator: (value) => Validators.isEmail(string: value),
+                    ),
+                    InputField(
+                      controller: passwordController,
+                      obscureText: true,
+                      icon: FontAwesomeIcons.lock,
+                      hintText: "authentication.password",
+                      validator: (value) =>
+                          Validators.validatePassword(string: value!),
+                    ),
+                    InputField(
+                      controller: repasswordController,
+                      obscureText: true,
+                      icon: FontAwesomeIcons.lock,
+                      hintText: "authentication.repassword",
+                      validator: (value) => Validators.confirmPassword(
+                          cPassword: value!, password: passwordController.text),
+                    ),
+                  ],
+                ),
+                const HeightWidget(20),
+
+                Column(
+                  children: [
+                    Consumer(
+                      builder:
+                          (BuildContext context, WidgetRef ref, Widget? child) {
+                        final auth = ref.watch(authProvider);
+                        return auth.isloginSubmissionProgress
+                            ? Column(
+                                children: const [
+                                  LoadingIndicator(
+                                    text: "authentication.reg_loading",
+                                  ),
+                                  HeightWidget(10),
+                                ],
+                              )
+                            : CustomElevatedButton(
+                                backgroundColor: kRedColor,
+                                label: "authentication.register",
+                                onPressed: () async {
+                                  // if (regfromKey.currentState!.validate()) {
+                                  final val = await auth.registerFarmer(
+                                      emailController.text,
+                                      passwordController.text,
+                                      repasswordController.text,
+                                      nameController.text);
+                                  //   if (val == null) {
+                                  //     context.router.replace(
+                                  //         const CompanyPageRoute());
+                                  //   } else {
+                                  //     toastMessage(context, message: val);
+                                  //   }
+                                  // }
+                                });
+                      },
+                    ),
+                    CustomTextButton(
+                      label: "authentication.alreadyaccount",
+                      onPressed: () {
+                        context.router.replace(const LoginPageRoute());
+                      },
+                      textColor: kPrimaryColor,
+                    )
+                  ],
+                )
+
+                // const HeightWidget(15),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   //=================desktop Register Page ========================
@@ -131,20 +241,20 @@ class _RegisterPageState extends State<RegisterPage> {
                                     backgroundColor: kRedColor,
                                     label: "authentication.register",
                                     onPressed: () async {
-                                      if (regfromKey.currentState!.validate()) {
-                                        final val = await auth.registerFarmer(
-                                            emailController.text,
-                                            passwordController.text,
-                                            repasswordController.text,
-                                            nameController.text);
-                                        if (val == null) {
-                                          context.router.replace(
-                                              CompanyDetailRegisterPageRoute(
-                                                  userType: UserType.admin));
-                                        } else {
-                                          toastMessage(context, message: val);
-                                        }
-                                      }
+                                      // if (regfromKey.currentState!.validate()) {
+                                      final val = await auth.registerFarmer(
+                                          emailController.text,
+                                          passwordController.text,
+                                          repasswordController.text,
+                                          nameController.text);
+                                      //   if (val == null) {
+                                      // context.router.replace(
+                                      //     CompanyDetailRegisterPageRoute(
+                                      //         userType: UserType.admin));
+                                      // } else {
+                                      //   toastMessage(context, message: val);
+                                      // }
+//}
                                     });
                           },
                         ),

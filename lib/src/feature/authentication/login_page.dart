@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
         body: Form(
       key: logfromKey,
       child: ResponsiveLayout(
-        mobile: Container(),
+        mobile: mobileWidget(),
         desktopAndWeb: desktopWidget(),
       ),
     ));
@@ -55,33 +55,31 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const HeightWidget(30),
-              const AppLogo(w: 200, h: 250),
-              const CustomTextWidget(
+              const AppLogo(w: 180, h: 150),
+              const HeightWidget(10),
+              const HeaderTextWidget(
                 text: "authentication.login_title",
-                isbold: true,
               ),
-
-              Padding(
-                padding: const EdgeInsets.all(kDefaultPadding),
-                child: Column(
-                  children: [
-                    InputField(
-                      textInputType: TextInputType.emailAddress,
-                      icon: FontAwesomeIcons.envelope,
-                      controller: emailController,
-                      hintText: "authentication.email",
-                      validator: (value) => Validators.isEmail(string: value),
-                    ),
-                    InputField(
-                      controller: passwordController,
-                      obscureText: true,
-                      icon: FontAwesomeIcons.lock,
-                      hintText: "authentication.password",
-                      validator: (value) =>
-                          Validators.validatePassword(string: value!),
-                    ),
-                  ],
-                ),
+              const HeightWidget(10),
+              Column(
+                children: [
+                  InputField(
+                    textInputType: TextInputType.emailAddress,
+                    icon: FontAwesomeIcons.envelope,
+                    controller: emailController,
+                    hintText: "authentication.email",
+                    validator: (value) => Validators.isEmail(string: value),
+                  ),
+                  const HeightWidget(10),
+                  InputField(
+                    controller: passwordController,
+                    obscureText: true,
+                    icon: FontAwesomeIcons.lock,
+                    hintText: "authentication.password",
+                    validator: (value) =>
+                        Validators.validatePassword(string: value!),
+                  ),
+                ],
               ),
               Container(
                 alignment: Alignment.centerRight,
@@ -97,57 +95,53 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              const HeightWidget(30),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                child: Column(
-                  children: [
-                    Consumer(
-                      builder:
-                          (BuildContext context, WidgetRef ref, Widget? child) {
-                        final auth = ref.watch(authProvider);
-                        return auth.isloginSubmissionProgress
-                            ? Column(
-                                children: const [
-                                  LoadingIndicator(
-                                    text: "authentication.log_loading",
-                                  ),
-                                  HeightWidget(10),
-                                ],
-                              )
-                            : CustomElevatedButton(
-                                backgroundColor: kGreenColor,
-                                label: "authentication.login",
-                                onPressed: () async {
-                                  if (logfromKey.currentState!.validate()) {
-                                    final val = await auth.loginFarmer(
-                                        emailController.text,
-                                        passwordController.text);
-                                    if (val.contains("ok")) {
-                                      //TODO:directly goto navigation dashboard according to its info
-                                      // context.router
-                                      //     .replace(NavBarPageRoute());
-                                    } else if (val == "assign") {
-                                      //check
-                                      // context.router.replace(
-                                      //     const CompanyPageRoute());
-                                    } else {
-                                      toastMessage(context, message: val);
-                                    }
+              const HeightWidget(20),
+              Column(
+                children: [
+                  Consumer(
+                    builder:
+                        (BuildContext context, WidgetRef ref, Widget? child) {
+                      final auth = ref.watch(authProvider);
+                      return auth.isloginSubmissionProgress
+                          ? Column(
+                              children: const [
+                                LoadingIndicator(
+                                  text: "authentication.log_loading",
+                                ),
+                                HeightWidget(10),
+                              ],
+                            )
+                          : CustomElevatedButton(
+                              backgroundColor: kGreenColor,
+                              label: "authentication.login",
+                              onPressed: () async {
+                                if (logfromKey.currentState!.validate()) {
+                                  final val = await auth.loginFarmer(
+                                      emailController.text,
+                                      passwordController.text);
+                                  if (val.contains("ok")) {
+                                    //TODO:directly goto navigation dashboard according to its info
+                                    // context.router
+                                    //     .replace(NavBarPageRoute());
+                                  } else if (val == "assign") {
+                                    //check
+                                    // context.router.replace(
+                                    //     const CompanyPageRoute());
+                                  } else {
+                                    toastMessage(context, message: val);
                                   }
-                                });
-                      },
-                    ),
-                    CustomElevatedButton(
-                      label: "authentication.createnewuser",
-                      onPressed: () {
-                        context.router.replace(const RegisterPageRoute());
-                      },
-                      backgroundColor: kRedColor,
-                    ),
-                  ],
-                ),
+                                }
+                              });
+                    },
+                  ),
+                  CustomElevatedButton(
+                    label: "authentication.createnewuser",
+                    onPressed: () {
+                      context.router.replace(const RegisterPageRoute());
+                    },
+                    backgroundColor: kRedColor,
+                  ),
+                ],
               )
 
               // const HeightWidget(15),

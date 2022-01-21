@@ -8,6 +8,7 @@ import 'package:dealermaster/src/common/widget/indicator/laoding_indicator.dart'
 import 'package:dealermaster/src/common/widget/responsive/responsive_layout.dart';
 import 'package:dealermaster/src/common/widget/size/custom_size_widget.dart';
 import 'package:dealermaster/src/common/widget/texts/normal_text.dart';
+import 'package:dealermaster/src/core/service/shared_pref_provider.dart';
 import 'package:dealermaster/src/feature/authentication/bloc/auth_state_notifier.dart';
 import 'package:dealermaster/src/routes/router.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,7 @@ class _SplashPageState extends ConsumerState<SplashPage>
   void initState() {
     super.initState();
     // start animating the splash
+    SharedPrefProvider.instance.clear();
     _controller.animateTo(1.0);
     // shareprefrence.clear();
   }
@@ -143,9 +145,10 @@ class MobSplash extends StatelessWidget {
             //============App Logo=============
 
             const AppLogo(
-              w: 130,
-              h: 260,
+              w: 180,
+              h: 110,
             ),
+            const HeightWidget(10),
             //==============introduction Text =================
             const CustomTextWidget(
               text: "splashpage.introduction",

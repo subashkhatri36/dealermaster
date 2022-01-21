@@ -1,12 +1,13 @@
-import 'dart:convert';
-import 'package:dealermaster/src/common/constant/api_link.dart';
-import 'package:dealermaster/src/common/constant/db_field.dart';
-import 'package:dealermaster/src/core/service/repo.dart';
-import 'package:dealermaster/src/core/service/shared_pref_provider.dart';
-import 'package:dealermaster/src/feature/authentication/bloc/auth_session.dart';
-import 'package:dealermaster/src/feature/authentication/data/model/register_model.dart';
-import 'package:dealermaster/src/feature/authentication/data/model/user_assign.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import "dart:convert";
+import "package:dealermaster/src/common/constant/api_link.dart";
+import "package:dealermaster/src/common/constant/db_field.dart";
+import "package:dealermaster/src/core/service/repo.dart";
+import "package:dealermaster/src/core/service/shared_pref_provider.dart";
+import "package:dealermaster/src/feature/authentication/bloc/auth_session.dart";
+import "package:dealermaster/src/feature/authentication/data/model/register_model.dart";
+import "package:dealermaster/src/feature/authentication/data/model/user_assign.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:http/http.dart" as http;
 
 final authRepoProvider = Provider((ref) => AuthRepositories());
 
@@ -29,7 +30,7 @@ class AuthRepositories extends Repo implements IAuth {
 
       final res = await client.post(ApiLink.login, data: data);
 
-      final assignlist = res['userassign'] as List;
+      final assignlist = res["userassign"] as List;
       List<UserAssign> userassign = [];
       if (assignlist.isNotEmpty) {
         userassign =
@@ -40,9 +41,9 @@ class AuthRepositories extends Repo implements IAuth {
         }
       }
 
-      RegisterModel? userinfo = res['userinfo'] == null
+      RegisterModel? userinfo = res["userinfo"] == null
           ? null
-          : RegisterModel.fromJson(res['userinfo']);
+          : RegisterModel.fromJson(res["userinfo"]);
 
       AuthSession s = AuthSession(
           token: res[token], userinfo: userinfo, userassign: userassign);
@@ -86,33 +87,51 @@ class AuthRepositories extends Repo implements IAuth {
       String email, String password, String repassword, String fullname) async {
     try {
       final data = {
-        "fullname": "skc",
+        "fullname": "skokc",
+        "email": "ppfderero@gmail.com",
+        "password": "subash",
+        "repassword": "subash",
+        "role": "admin",
+        "device": "web",
+        "isStaff": false
+      };
+      //   var url = Uri.parse();
+      var response = await http.post(
+          Uri.parse("https://dealerdealapi.herokuapp.com/api/register"),
+          body: jsonEncode(data),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'accept': 'application/json',
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers":
+                "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
+            "Access-Control-Allow-Methods": "POST, OPTIONS"
+          });
+      final res = response.body;
+      print(response.statusCode);
+      print(res);
+      print(response);
+      /*
+       "fullname": "skc",
         "email": "sk@gmail.com",
         "password": "subash",
         "repassword": "subash",
         "role": "admin",
         "device": "web",
-        "isStaff": true
-        // "fullname": fullname,
-        // "email": email,
-        // "password": password,
-        // "repassword": password,
-        // "role": "admin",
-        // "device": "web",
-        // "isStaff": true
-      };
+        "isStaff": true */
 
-      final res = await client.post(ApiLink.register, data: data);
+      //final res = await client.post(ApiLink.register, data: data);
 
-      AuthSession s = AuthSession(
-          token: res[token], userinfo: RegisterModel.fromJson(res['userinfo']));
+      // AuthSession s = AuthSession(
+      //     token: res[token], userinfo: RegisterModel.fromJson(res["userinfo"]));
 
-      await Future.wait([AuthSession.toStorage(s)]);
+      // await Future.wait([AuthSession.toStorage(s)]);
 
-      SharedPrefProvider.instance.setString(token, res[token]);
+      // SharedPrefProvider.instance.setString(token, res[token]);
 
       return null;
     } catch (error) {
+      print(error);
       return error.toString();
     }
   }
