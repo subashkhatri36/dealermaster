@@ -25,6 +25,7 @@ class InputField extends StatefulWidget {
     this.autofocus = false,
     this.textInputAction = TextInputAction.next,
     this.inputFormatters,
+    this.ispadding = true,
   }) : super(key: key);
 
   final IconData? icon;
@@ -44,6 +45,7 @@ class InputField extends StatefulWidget {
   final bool autofocus;
   final TextInputAction textInputAction;
   final List<TextInputFormatter>? inputFormatters;
+  final bool ispadding;
 
   @override
   _InputFieldState createState() => _InputFieldState();
@@ -73,7 +75,8 @@ class _InputFieldState extends State<InputField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: kDefaultPadding - 5),
+      margin:
+          EdgeInsets.only(bottom: widget.ispadding ? kDefaultPadding - 5 : 0),
       child: TextFormField(
         autofocus: widget.autofocus,
         onTap: widget.onTap,

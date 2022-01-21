@@ -26,7 +26,7 @@ class CustomElevatedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: ismargin
-          ? const EdgeInsets.only(bottom: kDefaultPadding + 5)
+          ? const EdgeInsets.only(bottom: kDefaultPadding)
           : EdgeInsets.zero,
       child: Container(
         constraints: const BoxConstraints(minHeight: 50),

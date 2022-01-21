@@ -1,11 +1,14 @@
 import 'package:dealermaster/src/common/constant/constants.dart';
+import 'package:dealermaster/src/common/constant/enums.dart';
+import 'package:dealermaster/src/common/utils/app_size_utils.dart';
 import 'package:flutter/material.dart';
 
-class CustomScaffold extends StatelessWidget {
+class CustomScaffold extends StatefulWidget {
   final bool showBackButton;
   final bool addPadding;
   final Widget body;
   final AppBar? appbar;
+  final UserType userType;
   final Future<bool> Function()? onWillPopScope;
   const CustomScaffold(
       {Key? key,
@@ -13,8 +16,19 @@ class CustomScaffold extends StatelessWidget {
       this.addPadding = true,
       required this.body,
       this.appbar,
+      this.userType = UserType.staff,
       this.onWillPopScope})
       : super(key: key);
+
+  @override
+  State<CustomScaffold> createState() => _CustomScaffoldState();
+}
+
+class _CustomScaffoldState extends State<CustomScaffold> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,19 +38,24 @@ class CustomScaffold extends StatelessWidget {
           FocusScope.of(context).requestFocus(FocusNode());
         },
         child: Scaffold(
-          appBar: appbar,
+          appBar: widget.appbar,
           backgroundColor: kWhiteColor,
           body: WillPopScope(
-            onWillPop: onWillPopScope,
+            onWillPop: widget.onWillPopScope,
             child: Container(
-              padding: addPadding
+              padding: widget.addPadding
                   ? const EdgeInsets.symmetric(horizontal: kDefaultPadding)
                   : null,
-              child: body,
+              child: widget.body,
             ),
           ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

@@ -5,3 +5,8 @@ enum SideCorner {
   right,
   none,
 }
+enum UserType {
+  superuser,
+  admin,
+  staff,
+}
